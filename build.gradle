@@ -1,0 +1,29 @@
+plugins {
+    id 'org.springframework.boot' version '3.1.0' apply false
+    id 'io.spring.dependency-management' version '1.1.0' apply false
+    id 'scala'
+    id 'java-library'
+    id 'maven-publish'
+}
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17) // Use same as backend
+    }
+}
+allprojects {
+    group = 'ai.cimba'
+    version = '0.0.1-SNAPSHOT'
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+// Add Scala dependencies to the root project
+dependencies {
+    // Use a specific version of Scala (adjust to your needs)
+    implementation 'org.scala-lang:scala-library:2.13.10'
+    // Optionally, add Scala compiler and reflection if needed
+    implementation 'org.scala-lang:scala-compiler:2.13.10'
+    implementation 'org.scala-lang:scala-reflect:2.13.10'
+}

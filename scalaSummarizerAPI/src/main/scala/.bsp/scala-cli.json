@@ -1,0 +1,20 @@
+{
+  "name": "scala-cli",
+  "argv": [
+    "C:\\Users\\rkverma\\AppData\\Local\\Coursier\\data\\bin\\.scala-cli.aux.exe",
+    "bsp",
+    "--json-options",
+    "F:\\CIMBA Assignment\\websummarizer\\scalaSummarizerAPI\\src\\main\\scala\\.scala-build\\ide-options-v2.json",
+    "--json-launcher-options",
+    "F:\\CIMBA Assignment\\websummarizer\\scalaSummarizerAPI\\src\\main\\scala\\.scala-build\\ide-launcher-options.json",
+    "--envs-file",
+    "F:\\CIMBA Assignment\\websummarizer\\scalaSummarizerAPI\\src\\main\\scala\\.scala-build\\ide-envs.json",
+    "F:\\CIMBA Assignment\\websummarizer\\scalaSummarizerAPI\\src\\main\\scala\\TestSummarizer.scala"
+  ],
+  "version": "1.7.1",
+  "bspVersion": "2.1.1",
+  "languages": [
+    "scala",
+    "java"
+  ]
+}

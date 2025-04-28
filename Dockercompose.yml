@@ -1,0 +1,73 @@
+# File: docker-compose.yml
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: websummarizer
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: rahul
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - summarizer-network
+
+  scala-library:
+    build:
+      context: ./scalaSummarizerAPI
+    image: summarizer-scala-library:latest
+    networks:
+      - summarizer-network
+    depends_on:
+      - postgres
+
+  python-service:
+    build:
+      context: ./python-service
+    image: summarizer-python-service:latest
+    environment:
+      - OPENAI_API_KEY=YOUR_OPENAI_API_KEY_HERE  # Replace with your actual API key
+    ports:
+      - "8000:8000"
+    networks:
+      - summarizer-network
+
+  backend:
+    build:
+      context: ./backend
+    image: summarizer-backend:latest
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/websummarizer
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      PYTHON_SERVICE_URL: http://python-service:8000/summarize
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - python-service
+    networks:
+      - summarizer-network
+
+  frontend:
+    build:
+      context: ./frontend
+    image: summarizer-frontend:latest
+    ports:
+      - "80:80"
+    environment:
+      - REACT_APP_API_BASE_URL=/api
+    depends_on:
+      - backend
+    networks:
+      - summarizer-network
+
+networks:
+  summarizer-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
